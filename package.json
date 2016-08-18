@@ -1,6 +1,6 @@
 {
   "name": "webpack-dynamics-plugin",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A small plugin that can upload bundle files to Microsoft Dynamics as web resources.",
   "main": "index.js",
   "scripts": {
