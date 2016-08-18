@@ -31,6 +31,10 @@ This plugin supports configuration through the passed in arguments. The ```optio
 
 ```js
 {
-    // TODO: figure out the needed parameters
+    dynamics: {
+        connectionString: '', // the connection string to use to connect to dynamics
+        solutionName: '' // the name of the solution to include the files in
+    },
+    files: ['/sample/file1.js', '/sample/**/*.js'] // the files to upload, may be in glob format
 }
 ```
