@@ -1,0 +1,23 @@
+{
+  "name": "webpack-dynamics-plugin",
+  "version": "1.0.0",
+  "description": "A small plugin that can upload bundle files to Microsoft Dynamics as web resources.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'No tests specified!' && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nadrees/webpack-dynamics-plugin.git"
+  },
+  "keywords": [
+    "Webpack",
+    "Microsoft Dynamics"
+  ],
+  "author": "Nathen Drees",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nadrees/webpack-dynamics-plugin/issues"
+  },
+  "homepage": "https://github.com/nadrees/webpack-dynamics-plugin#readme"
+}
