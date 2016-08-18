@@ -23,7 +23,9 @@
   },
   "homepage": "https://github.com/nadrees/webpack-dynamics-plugin#readme",
   "dependencies": {
-    "webpack": "^1.13.1",
+    "webpack": "^1.13.1"
+  },
+  "optionalDependencies": {
     "wrp": "^1.0.0"
   },
   "devDependencies": {
