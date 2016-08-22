@@ -1,3 +1,5 @@
+import os from 'os';
+
 import WebpackDynamicsPlugin from './index';
 import {expect} from 'chai';
 import sinon from 'sinon';
@@ -14,7 +16,7 @@ describe('The WebpackDynamicsPlugin', () => {
             dynamics: {
                 connectionString: 'test'
             },
-            files: ['test/**/*.*']
+            files: []
         };
     });
 
@@ -88,7 +90,69 @@ describe('The WebpackDynamicsPlugin', () => {
     });
 
     describe('uploadFiles function', () => {
-        //TODO
+        let plugin = null,
+            stub = null;
+
+        beforeEach(() => {
+            args.files.push('test/*.js');
+
+            plugin = createInstance();
+            stub = sinon.stub(plugin, '__sendToDynamics');
+        });
+
+        it('should support an explicit file path', () => {
+            plugin.options.files = ['test/test1.js'];
+
+            plugin.uploadFiles();
+
+            expect(stub.calledOnce).to.be.true;
+
+            let args = stub.lastCall.args;
+            expect(args.length).to.equal(2);
+            expect(args[0].length).to.equal(1);
+            expect(args[0][0]).to.equal('test/test1.js');
+        });
+
+        it('should support the glob format', () => {
+            plugin.uploadFiles();
+
+            expect(stub.calledOnce).to.be.true;
+
+            let args = stub.lastCall.args;
+            expect(args.length).to.equal(2);
+            expect(args[0].length).to.equal(2);
+        });
+
+        it('should dedup files if matched multiple times', () => {
+            plugin.options.files = ['test/test1.js', 'test/**/*.js'];
+
+            plugin.uploadFiles();
+
+            expect(stub.calledOnce).to.be.true;
+
+            let args = stub.lastCall.args;
+            expect(args.length).to.equal(2);
+            expect(args[0].length).to.equal(2);
+        });
+
+        it('should require at least 1 file to be matched', () => {
+            plugin.options.files = [];
+
+            expect(() => plugin.uploadFiles()).to.throw();
+        });
+
+        it('should copy the matched files to a temp dir', () => {
+            stub.restore();
+            stub = sinon.stub(os, 'tmpdir');
+        });
+
+        describe('when calling ```wrp```', () => {
+            it('should pass the correct arguments');
+
+            it('should report an errors to ```console.error```');
+
+            it('should delete the temp dir when done');
+        });
     });
 
     // clean up the spies on console.* methods

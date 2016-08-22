@@ -1,4 +1,6 @@
 import objectAssign from 'object-assign';
+import glob from 'glob';
+import {union} from 'lodash';
 
 class WebpackDynamicsPlugin {
     constructor(options = {}) {
@@ -22,7 +24,33 @@ class WebpackDynamicsPlugin {
         compiler.plugin('after-emit', this.uploadFiles.bind(this));
     }
 
-    uploadFiles() {
+    uploadFiles(compilation, done) {
+        let files = this.__globFiles();
+        if (!files.length)
+            throw new Error('No files were matched');
+
+        let tmpDir = this.__copyFilesToTmp(files);
+        try {
+            this.__sendToDynamics(tmpDir, done);
+        }
+        finally {
+            //TODO clean up temp dir
+        }
+    }
+
+    __globFiles() {
+        return this.options.files.map((f) => {
+            return glob.sync(f, {});
+        }).reduce((currentList, nextList) => {
+            return union(currentList, nextList);
+        }, []);
+    }
+
+    __copyFilesToTmp(files) {
+
+    }
+
+    __sendToDynamics(files, done) {
 
     }
 }
